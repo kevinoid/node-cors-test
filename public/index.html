@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<head>
+  <meta charset="utf-8" />
+  <title>Node.js CORS Test Page</title>
+</head>
+<body>
+  <h1>Node.js <abbr title="Cross-Origin Resource Sharing">CORS</abbr> Test Page</h1>
+
+  <form id="form-cors-division">
+    <fieldset>
+      <legend>CORS Division</legend>
+
+      <label for="dividend">Dividend:</label>
+      <input type="text" id="dividend" name="dividend" />
+      <label for="divisor">Divisor:</label>
+      <input type="text" id="divisor" name="divisor" />
+      <label for="quotient">Quotient:</label>
+      <input type="text" id="quotient" name="quotient" disabled="disabled" />
+
+      <input type="submit" id="calculate" name="calculate" value="Calculate" />
+    </fieldset>
+  </form>
+
+  <script type="text/javascript">
+//<![CDATA[
+(function() {
+  "use strict";
+
+  document.getElementById("form-cors-division")
+    .addEventListener("submit", function(evt) {
+      var xhr;
+
+      evt.preventDefault();
+
+      xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        var contentType, response;
+
+        if (this.readyState === 4) {
+          if (this["status"] < 200 || this["status"] >= 300) {
+            alert("Server responded with status " + this["status"]);
+            return;
+          }
+
+          contentType = this.getResponseHeader("Content-Type");
+          if (!/^application\/json\b/.test(contentType)) {
+            alert("Server responded with " + contentType);
+            return;
+          }
+
+          try {
+            response = JSON.parse(this.responseText);
+          } catch (ex) {
+            alert("Unable to parse JSON response: " + ex);
+            return;
+          }
+
+          document.getElementById("quotient").value = response.quotient;
+        }
+      };
+      xhr.open("POST", "http://localhost:3000/divide");
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.send(JSON.stringify({
+        dividend: document.getElementById("dividend").value,
+        divisor: document.getElementById("divisor").value
+      }));
+    });
+}());
+//]]>
+  </script>
+</body>
+</html>

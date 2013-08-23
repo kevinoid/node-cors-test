@@ -1,0 +1,7 @@
+# Files ignored by npm
+.jshintignore
+.jshintrc
+.jslintrc
+gjslint-local.py
+test
+test-local*

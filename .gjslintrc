@@ -1,0 +1,5 @@
+--recurse=.
+--strict
+--nojsdoc
+--unix
+--exclude_directories=node_modules

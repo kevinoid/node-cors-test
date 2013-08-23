@@ -1,0 +1,4 @@
+# Files and directories ignored by git
+# NOTE:  When adding, consider whether to add to .npmignore as well
+/node_modules
+/test-local*

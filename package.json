@@ -1,0 +1,16 @@
+{
+  "name": "node-cors-test",
+  "description": "Example project for testing CORS support in Node.js/Express.",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "supervisor --quiet --no-restart-on exit --extensions js,json --ignore test,test.js --poll-interval 2000 cors-test.js"
+  },
+  "dependencies": {
+    "supervisor": "0.5.x",
+    "express": "~3.3.5"
+  },
+  "devDependencies": {
+    "jshint": ">=2.0.0"
+  }
+}
